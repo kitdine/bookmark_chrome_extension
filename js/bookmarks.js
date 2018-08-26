@@ -54,6 +54,9 @@ function showTitleAndFolder(tab, bookmark) {
     document
       .getElementById("bookmarkId")
       .setAttribute("value", bookmark.id);
+    document
+        .getElementById("cancel")
+        .addEventListener("click", cancelBookmark);
     // document.getElementById("folders").setAttribute("value", bookmark.parentId);
     // document.getElementById(bookmark.parentId).selected = true;
 }
@@ -79,5 +82,15 @@ function changeFolder() {
     let id = document.getElementById("bookmarkId").getAttribute("value");
     chrome.bookmarks.move(id, { parentId: parentId }, (node)=>{
         document.getElementById(node.id).selected = true;
+    });
+}
+
+function cancelBookmark() {
+    let id = document.getElementById("bookmarkId").getAttribute("value");
+    if(id === "" || id === undefined || id === null) {
+        return ;
+    }
+    chrome.bookmarks.remove(id, () => {
+        document.getElementById("bookmarkId").setAttribute("value", "");
     });
 }
