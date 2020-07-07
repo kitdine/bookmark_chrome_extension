@@ -3,11 +3,11 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   if (request.action === "getImgUrl") {
     let array = document.getElementsByTagName("img");
     if (array.length > 0) {
-        for(let i = 0; i< array.length; i++) {
-            if (array[i].src.startsWith("http")) {
-                sendResponse(array[i].src);
-            }
-        }
+      let img = array[0].src;
+      if(img.startsWith("//")) {
+        img = request.url.substring("//") + img;
+      }
+      sendResponse(img);
     } else {
       sendResponse();
     }

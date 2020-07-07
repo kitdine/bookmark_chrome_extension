@@ -26,7 +26,7 @@ function showTitleAndFolder(tab, bookmark) {
               .getElementById("favIconImg")
               .setAttribute("src", result.key);
         } else {
-            chrome.tabs.sendMessage( tab.id,  { action: "getImgUrl" }, (response)=>{
+            chrome.tabs.sendMessage( tab.id,  { action: "getImgUrl", url: tab.url }, (response)=>{
                 let key = "bookmark_id_" + bookmark.id;
                 chrome.storage.local.set( { key: response }, () => { 
                         document.getElementById("favIconImg").setAttribute("src",response);
